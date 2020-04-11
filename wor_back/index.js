@@ -4,7 +4,10 @@ const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
 
+console.log('new request')
+
 app.use(cors())
+app.use(express.json())
 
 const url = process.env.MONGODB_URI
 
@@ -17,43 +20,29 @@ const personSchema = new mongoose.Schema({
 
 const Person = mongoose.model('Person', personSchema)
 
-let persons = []
-
-Person.find({}).then(result => persons = result )
-
-/*
-const person1 = new Person({
-  name: 'person1',
-  tasks: [
-    'Do some work',
-    'Do a little bit more work'
-  ]
-})
-
-const person2 = new Person(
-{
-  name: 'person2',
-  tasks: [
-    'Do some cleaning',
-    'Do some laundry'
-  ]
-})
-
-person1.save().then(result => {
-  console.log('First person saved')
-  person2.save().then(result2 => {
-    console.log('person2 saved')
-    mongoose.connection.close()
-  })
-})
-*/
-
 app.get('/', (req, res) => {
-  res.send('<h1>Hello World!</h1>')
+  res.send('<h1>There is nothing</h1>')
 })
 
 app.get('/api/persons', (req, res) => {
-  res.json(persons.map(person => person.toJSON()))
+  Person.find({}).then(persons => {
+    res.json(persons.map(person => person.toJSON()))
+  })
+})
+
+app.put('/api/persons/:id', (req, res) => {
+  console.log(req.body)
+  const body = req.body
+
+  const person = {
+    name: body.name,
+    tasks: body.tasks
+  }
+
+  Person.findByIdAndUpdate(req.params.id, person, {new: true})
+    .then(updatedPerson => {
+      res.json(updatedPerson.toJSON())
+    }).catch(() => res.status(404).end())
 })
 
 const PORT = process.env.PORT

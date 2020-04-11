@@ -1,17 +1,5 @@
 import React from 'react'
 
-const Task = ({name, task}) => {
-
-  const cellStyle = {
-  	padding: 10
-  }
-
-  return(
-  	<tr>
-    <th style={cellStyle}>{name}</th><th style={cellStyle}>{task}</th>
-    </tr>
-  )
-
-}
+const Task = ({name, task}) => <tr><th>{name}</th><th>{task}</th></tr>
 
 export default Task

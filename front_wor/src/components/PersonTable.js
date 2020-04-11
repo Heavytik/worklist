@@ -1,18 +1,16 @@
 import React from 'react'
-import Task from './Task'
 
-const PersonTable = (props) => {
-
-  const persons = props.persons
+const PersonTable = ({persons}) => {
+  
+  const doTaskList = (tasks) => tasks.map(task => <li key={task}>{task}</li>)
+  const personsTask = persons.map(person => <tr key={person.name}><th>{person.name}</th><th><ul>{doTaskList(person.tasks)}</ul></th></tr>)
 
   return (
-    <div id="table">
-        <table>
+    <div>
+      <table>
         <tbody>
-          {
-            persons.map(person => <Task key={person.name} name={person.name} task={person.tasks[0]} />)
-          }
-      </tbody>
+          {personsTask}
+        </tbody>
       </table>
     </div>
   )
