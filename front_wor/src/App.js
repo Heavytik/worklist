@@ -3,7 +3,7 @@ import './App.css';
 import PersonTable from './components/PersonTable'
 import axios from 'axios'
 
-const backendBaseURL = 'localhost:3001'
+//const backendBaseURL = 'localhost:3001'
 
 
 const App = () => {
