@@ -24,6 +24,17 @@ const App = () => {
   
   const handleSelectChange = event => setAddForName(event.target.value)
   const handleNewTaskChange = event => setNewTask(event.target.value)
+
+  const handleTaskRemove = (name, task) => () => {
+    const personToModify = persons.find(person => person.name === name)
+    const id = personToModify._id
+    const url = `http://localhost:3001/api/persons/${id}`
+    const changedPerson = { ...personToModify, tasks: personToModify.tasks.filter(currentTask => currentTask !== task)}
+    axios
+      .put(url, changedPerson).then(response => {
+        setPersons(persons.map(person => person._id !== id ? person : response.data))
+      })
+  }
   
   const handleSubmit = event => {
     event.preventDefault()
@@ -44,7 +55,7 @@ const App = () => {
   return (
     <div className="App">
       <h1>Työlista</h1>
-      <PersonTable persons={persons} />
+      <PersonTable persons={persons} handleTaskRemove={handleTaskRemove}/>
       <h2>Lisää tehtävä</h2>
       <form onSubmit={handleSubmit}>
         <label>

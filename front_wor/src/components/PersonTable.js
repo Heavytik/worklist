@@ -1,9 +1,9 @@
 import React from 'react'
 
-const PersonTable = ({persons}) => {
+const PersonTable = ({persons, handleTaskRemove}) => {
   
-  const doTaskList = (tasks) => tasks.map(task => <li key={task}>{task}</li>)
-  const personsTask = persons.map(person => <tr key={person.name}><th>{person.name}</th><th><ul>{doTaskList(person.tasks)}</ul></th></tr>)
+  const doTaskList = (person) => person.tasks.map(task => <li key={task} onClick={handleTaskRemove(person.name, task)}>{task}</li>)
+  const personsTask = persons.map(person => <tr key={person.name}><th>{person.name}</th><th><ul>{doTaskList(person)}</ul></th></tr>)
 
   return (
     <div>
