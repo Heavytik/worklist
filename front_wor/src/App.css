@@ -44,3 +44,11 @@ p {
 table {
   align-items: center;
 }
+
+.weNeedMoreSpace {
+  margin: 10px;
+}
+
+.weNeedMoreSpaceUpDown {
+  margin: 10px 0px;
+}
